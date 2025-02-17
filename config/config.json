@@ -1,0 +1,11 @@
+{
+  "devMode": false,
+  "token": "",
+  "ownerId": "",
+  "events": [
+    "messageCreate",
+    "interactionCreate",
+    "messageReactionAdd",
+    "messageReactionRemove"
+  ]
+}

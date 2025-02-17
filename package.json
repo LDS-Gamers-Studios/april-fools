@@ -1,0 +1,28 @@
+{
+  "name": "april24",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --max-warnings=0"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "augurbot-ts": "^3.2.2",
+    "discord.js": "^14.18.0",
+    "image-palette": "^2.1.0",
+    "image-pixels": "^2.2.2",
+    "jimp": "^0.22.12",
+    "no-repeat": "npm:@bobbythecatfish/no-repeat@^1.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.52.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jsdoc": "^46.8.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1"
+  }
+}
