@@ -1,12 +1,15 @@
 /* eslint-disable no-console */
 // The following is an attempt at a recreation, and is not the original code
-// One notable difference is that the live version picked the *last* occurrence it could find instead of the first, as is done here.
+// One notable difference is that the live version picked a random occurrence instead of the first, as is done here. Either that or the regex was different.
 const Augur = require("augurbot-ts");
 const u = require("../utils/utils");
 
 const DEBUG = false;
 
 const regex = /(?:i'?m|i am) ([^.?!,;:]*)/i;
+
+/** @type {Set<string>} */
+const cooldowns = new Set();
 
 /** @param {string} string */
 function dadTest(string) {
@@ -22,12 +25,16 @@ function dadTest(string) {
 
 const Module = new Augur.Module()
 .addEvent("messageCreate", async (msg) => {
-  if (msg.guildId !== u.sf.ldsg || msg.author.bot) return;
+  if (msg.guildId !== u.sf.ldsg || msg.author.bot || cooldowns.has(msg.author.id)) return;
 
   const name = dadTest(msg.content);
   if (name && name !== msg.member.displayName) {
     await msg.reply(`Hi, ${name}. I'm Icarus.`);
     msg.member.setNickname(name);
+    cooldowns.add(msg.author.id);
+    setTimeout(() => {
+      cooldowns.delete(msg.author.id);
+    }, 30 * 60_000); // actual time wasn't documented, assuming it was at least 30 minutes.
   }
 });
 

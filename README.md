@@ -55,7 +55,7 @@ Something about getting sent to Ghost's office?
 
 ## 2020
 ### Concept
-Dad Bot! Icarus would respond to messages that started with "I'm", then respond with "Hi, [the rest of their message], I'm Icarus!"
+Dad Bot! Icarus would respond to messages that started with "I'm", then respond with "Hi, [the rest of their message], I'm Icarus!" and set the poster's nickname to the parsed bit of the message. There was also a cooldown of some sort that prevented you from this happening too often.
 ### History
 - I don't know much about this one yet.
 ### Notable Goofs
