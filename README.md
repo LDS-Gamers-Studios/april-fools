@@ -28,7 +28,7 @@ Icarus switched between holidays every few hours, giving rewards and snarky comm
 - Since BobbyTheCatfish was on his mission at the time, he had to write code in Google Docs and was severely limited in his availability. Despite this, OhGo was able to parse Bobby's pseudocode and deliver a product with minimal errors.
 - The code has since been refined and split into several files to increase readability, bugs have been fixed, and code has been updated to be in line with [Icarus v5.5's codebase](https://github.com/LDS-Gamers-Studios/icarus5.5) as of early Feb. 2025.
 ### Notable Goofs
-- The NoRepeat and cooldown systems, designed to prevent the same things from occurring right after each other, often failed. This led to user `cellistjudoka` being repeatedly given valentines cards.
+- The NoRepeat and cooldown systems, designed to prevent the same things from occurring right after each other, often failed. This led to user `cellistjudoka` being repeatedly given valentines cards. The system has since been fixed and turned into an [NPM Package](https://npmjs.org/@bobbythecatfish/no-repeat).
 
 ## 2023
 ### Concept
@@ -37,6 +37,7 @@ From what I can gather, the server got "corrupted", and all the channels started
 [GuyInGrey](https://github.com/GuyInGrey)
 ### History
 - The code for this wasn't saved, and the development history is hard to find.
+
 ## 2022
 ### Concept
 Dodgeball! Every time someone sent a message, there was a 1/4 chance that Icarus would "throw a ball" (react with 🏐) at a user. The user then had a 2-6 second window to "dodge" (react with the same emoji). If they dodged in time, Icarus would give them a 🦆 reaction. Otherwise, Icarus would give them a 💥 reaction and send them to a 'prison' channel for an hour.
@@ -46,7 +47,7 @@ Dodgeball! Every time someone sent a message, there was a 1/4 chance that Icarus
 ### History
 - Not much is known about the planning or development at the moment, and likely won't ever be known since the testing server was deleted.
 - Testing was done on March 31st.
-- This was deployed on Icarus 5, but has since been updated to be in line with [Icarus v5.5's codebase](https://github.com/LDS-Gamers-Studios/icarus5.5) as of early Feb. 2025. (or at least it will be)
+- This was deployed on Icarus 5, but has since been updated to be in line with [Icarus v5.5's codebase](https://github.com/LDS-Gamers-Studios/icarus5.5) as of early Feb. 2025.
 
 ## 2021
 ### Concept
