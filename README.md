@@ -10,7 +10,36 @@ Ever wanted to see the behind the scenes on some of the things we've done for Ap
 
 # Fools over the years
 ## 2025
-It's you. You're the fool. (for thinking I'd make it public before it released)
+### Concept
+Icarus got duolingo and decided to learn a language based on popular vote. Pirate Speak ended up winning, so he spoke in that language all day. To help showcase the translation, certain commands, such as `!roastme`, `!roastchannel`, `!birdfact`, and `!excuse` were added to generate large bits of AI or procedurally generated text. In addition, all channel names were changed to be pirate themed, and old newspaper ads were photoshopped and played occasionally.
+### Developer
+[BobbyTheCatfish](https://github.com/bobbythecatfish)
+
+### History
+- Discussion began on February 12th.
+- The `!excuse` system was already in use by BobbyTheCatfish in a personal bot, and was suggested by Chickenfried to be implemented in the April Fools event.
+- Incognito brought up the idea of roasting with AI.
+  > If we're bringing chatGPT into the mix, we should have Icarus ask chatGTP to roast either the game or the topic the channel is related to at random times.
+- Saidenmaster and JoyfulPenguin brought up the ideas ultimately used for `!birdfact`
+  > Have Icarus send bird facts in channels
+  
+  > "reply "STOP" to unsubscribe" and anyone who replies gets added to a pingable "bird facts" role
+- Ultimately, the biggest part was brought up by OrrinJelo.
+  > Change LDSG Official language to pirate/pig latin for the day.
+- BobbyTheCatfish provided the last few ideas such as doing a poll, doing voice channel shenanigans, and running ads.
+- Development started shortly after, and details were mostly kept secret from the rest of the server, including Team.
+- Development on the translation API started on the 14th, and was mostly done at that point.
+- AI features and `!excuse` were mostly completed by the 15th, with ads being sourced and finalized through the 17th.
+- On March 26th, a special survey banner was set and a language poll was released in `#announcements`.
+- The poll finished on the 29th and revealed that Pirate Speak was going to be the official language for April Fools.
+- On the 29th, ads were photoshopped to be in pirate speak, and code was reviewed to ensure functionality and proper grammer.
+- On the 30th, a server logo and banner were created. Then a csv of channel ids, their current names, and pirate themed names was created from which the server channels would be renamed
+### Notable Goofs
+- Icarus only used about $0.01 worth of ChatGPT credits, leaving BobbyTheCatfish with $4.99 left to rot.
+- While the fixed no-repeat system from the previous year was used, the bot had to be restarted several times, which caused some things to be repeated
+- Later in the night, the translation system was changed to select a language at random while translating. This caused the `!trusted` command to provide a really funny response when in uwu mode.
+
+
 ## 2024
 ### Concept
 Icarus switched between holidays every few hours, giving rewards and snarky comments based on the time of year he thought it was. In the early evening, 'Chaos Mode' was enabled, which stacked a new holiday on top of the current one(s) instead of switching between them. Some responses also became more unhinged.
