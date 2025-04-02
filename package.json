@@ -10,12 +10,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@discordjs/voice": "^0.18.0",
     "augurbot-ts": "^3.2.2",
     "discord.js": "^14.18.0",
     "image-palette": "^2.1.0",
     "image-pixels": "^2.2.2",
     "jimp": "^0.22.12",
-    "no-repeat": "npm:@bobbythecatfish/no-repeat@^1.1.1"
+    "no-repeat": "npm:@bobbythecatfish/no-repeat@^1.1.1",
+    "openai": "^4.91.1"
   },
   "devDependencies": {
     "eslint": "^8.52.0",
