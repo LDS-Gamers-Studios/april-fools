@@ -7,15 +7,19 @@ const Discord = require("discord.js");
 const CONFIG = {
   ON: true,
   CONFIDENTIAL: false,
+
   // 10 - 6
   WORKMODE: () => {
     const time = moment().tz("America/Denver").hour();
     return time > 9 && time < 18;
   },
+
   /** @type {"pig"|"pirate"|"uwu"|"lol"|"off"} */
   LANGUAGE: "pirate",
+
   AI_COOLDOWN: 30_000,
   AD_DURATION: 7_000,
+
   TYPING_COOLDOWN: () => ((Math.random() * 3) + 2) * 120_000,
   VC_JOIN_DELAY: () => Math.max((Math.random() * 60) * 2_000, 30_000),
   VC_SWITCH_DELAY: () => ((Math.random() * 30) + 4) * 1_000,
@@ -23,7 +27,7 @@ const CONFIG = {
 };
 
 
-const emoji = config.devMode ? {
+const pollEmoji = config.devMode ? {
   // TESTING
   cat: "🐱",
   uwu: "🥵"
@@ -48,8 +52,8 @@ const poll = {
   answers: [
     { text: "Pirate Speak", emoji: "🦜" },
     { text: "Pig Latin", emoji: "🐷" },
-    { text: "LOLCATZ", emoji: emoji.cat },
-    { text: "UwU", emoji: emoji.uwu },
+    { text: "LOLCATZ", emoji: pollEmoji.cat },
+    { text: "UwU", emoji: pollEmoji.uwu },
   ]
 };
 
