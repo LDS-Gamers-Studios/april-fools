@@ -8,6 +8,10 @@
 		"ecmaVersion": 2021
 	},
 	"plugins": [
+    "node",
+    "promise",
+    "standard",
+    "import",
 		"jsdoc"
 	],
 	"rules": {
