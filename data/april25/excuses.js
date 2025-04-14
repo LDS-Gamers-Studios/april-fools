@@ -97,7 +97,7 @@ const words = {
     ])
   },
   play: {
-    "intros": new NoRepeat([
+    intros: new NoRepeat([
       "It's been great talking to you, but",
       "I gotta run,",
       "Look over there!",

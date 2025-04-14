@@ -3,6 +3,7 @@ const Augur = require("augurbot-ts");
 const Discord = require("discord.js");
 const { joinVoiceChannel, createAudioResource, createAudioPlayer, AudioPlayerStatus, VoiceConnection } = require("@discordjs/voice");
 const { OpenAI } = require("openai");
+const fs = require("fs");
 
 const aiConfig = require("../config/ai.json");
 const config = require("../config/config.json");
@@ -20,6 +21,21 @@ const adstuff = new u.Collection();
 function debugLog(...log) {
   // eslint-disable-next-line no-console
   if (config.devMode) console.log(...log);
+}
+
+/**
+ * @param {Discord.Message<true>} msg
+ * @param {boolean} starting
+ */
+async function setChannelNames(msg, starting) {
+  const file = fs.readFileSync("data/april25/channels.csv", "utf-8");
+
+  for (const row of file.split("\n")) {
+    // eslint-disable-next-line no-unused-vars
+    const [id, name, pirate] = row.split(",");
+
+    await msg.guild.channels.cache.get(id)?.setName(starting ? pirate : name).catch(u.noop);
+  }
 }
 
 // AI stuff
@@ -342,23 +358,6 @@ const Module = new Augur.Module()
     msg.channel.send({ poll });
   }
 })
-.addCommand({ name: "init",
-  permissions: msg => u.perms.isOwner(msg.member),
-  onlyGuild: true,
-  process: async (msg) => {
-    const birdrole = msg.guild.roles.cache.get(roles.birdFacts);
-    if (!birdrole) return msg.reply("Couldn't find the bird facts role");
-    await birdrole.setName("Bird Facts Pings");
-    await msg.guild.members.cache.get(msg.client.user.id)?.setNickname("Icarus - Pirate Bot of Legend");
-    const fs = require("fs");
-    const file = fs.readFileSync("channels.csv", "utf-8");
-    for (const row of file.split("\n")) {
-      // eslint-disable-next-line no-unused-vars
-      const [id, name, pirate] = row.split(",");
-      await msg.guild.channels.cache.get(id)?.setName(pirate).catch(u.noop);
-    }
-  }
-})
 
 // other commands
 .addCommand({ name: "excuse",
@@ -423,7 +422,50 @@ const Module = new Augur.Module()
       }, CONFIG.AD_DURATION, msg.channel);
     }
   }
+})
+.addCommand({ name: "getchannels",
+  permissions: msg => u.perms.isOwner(msg.member),
+  onlyGuild: true,
+  process: async (msg) => {
+    const me = msg.guild.members.cache.get(msg.client.user.id);
+    if (!me) return msg.reply("I couldn't find myself...");
+    
+    const nameMap = ["id,name,pirate"];
+    for (const [id, channel] of msg.guild?.channels.cache ?? new u.Collection()) {
+      if (channel.permissionsFor(me).has("ManageChannels"))
+        nameMap.push(`${id},${channel.name}`);
+    }
+    const fs = require("fs");
+    fs.writeFileSync("data/april25/channels.csv", nameMap.join("\n"));
+    msg.reply("I saved the channel names in data/channels.csv. You'll have to translate them manually.")
+  }
+})
+.addCommand({ name: "init",
+  permissions: msg => u.perms.isOwner(msg.member),
+  onlyGuild: true,
+  process: async (msg) => {
+    const birdrole = msg.guild.roles.cache.get(roles.birdFacts);
+    if (!birdrole) return msg.reply("Couldn't find the bird facts role");
+    await birdrole.setName("Bird Facts Pings");
+    await msg.guild.members.cache.get(msg.client.user.id)?.setNickname("Icarus - Pirate Bot of Legend");
+    await setChannelNames(msg, true)
+  }
+})
+.addCommand({
+  name: "teardown",
+  permissions: msg => u.perms.isOwner(msg.member),
+  onlyGuild: true,
+  process: async (msg) => {
+    const file = fs.readFileSync("data/april25/channels.csv", "utf-8");
+    CONFIG.ON = false;
+    CONFIG.CONFIDENTIAL = true;
+    CONFIG.LANGUAGE = "off";
+    await msg.guild.members.cache.get(msg.client.user.id)?.setNickname("Icarus - Bird Bot of Legend");
+    await msg.client.user.setAvatar(msg.client.application.iconURL()).catch(() => {
+      msg.channel.send("couldn't set avatar")
+    })
+    await setChannelNames(msg, false)
+  }
 });
-
 
 module.exports = Module;
