@@ -131,39 +131,41 @@ const utils = {
    * @param {String} prompt The prompt for the confirmation
    * @returns {Promise<Boolean|null>}
    */
-  confirmInteraction: async (interaction, prompt = "Are you sure?", title = "Confirmation Dialog") => {
-    const embed = utils.embed({ author: interaction.member ?? interaction.user })
-      .setColor(0xff0000)
-      .setTitle(title)
-      .setDescription(prompt);
-    const confirmTrue = utils.customId(),
-      confirmFalse = utils.customId();
+  // confirmInteraction: async (interaction, prompt = "Are you sure?", title = "Confirmation Dialog") => {
+  //   const embed = utils.embed({ author: interaction.member ?? interaction.user })
+  //     .setColor(0xff0000)
+  //     .setTitle(title)
+  //     .setDescription(prompt);
+  //   const confirmTrue = utils.customId(),
+  //     confirmFalse = utils.customId();
 
-    const response = {
-      embeds: [embed],
-      components: [
-        utils.MessageActionRow().addComponents(
-          new utils.Button().setCustomId(confirmTrue).setEmoji("✅").setLabel("Confirm").setStyle(Discord.ButtonStyle.Success),
-          new utils.Button().setCustomId(confirmFalse).setEmoji("⛔").setLabel("Cancel").setStyle(Discord.ButtonStyle.Danger)
-        )
-      ],
-      content: null
-    };
+  //   const response = {
+  //     embeds: [embed],
+  //     components: [
+  //       utils.MessageActionRow().addComponents(
+  //         new utils.Button().setCustomId(confirmTrue).setEmoji("✅").setLabel("Confirm").setStyle(Discord.ButtonStyle.Success),
+  //         new utils.Button().setCustomId(confirmFalse).setEmoji("⛔").setLabel("Cancel").setStyle(Discord.ButtonStyle.Danger)
+  //       )
+  //     ],
+  //     content: null
+  //   };
 
-    if (interaction.replied || interaction.deferred) await interaction.editReply(response);
-    else await interaction.reply({ ...response, ephemeral: true, content: undefined });
+  //   if (interaction.replied || interaction.deferred) await interaction.editReply(response);
+  //   else await interaction.reply({ ...response, ephemeral: true, content: undefined });
 
-    const confirm = await interaction.channel?.awaitMessageComponent({
-      filter: (button) => button.user.id === interaction.user.id && (button.customId === confirmTrue || button.customId === confirmFalse),
-      componentType: ComponentType.Button,
-      time: 60000
-    }).catch(() => ({ customId: "confirmTimeout" }));
+  //   const confirm = await interaction.channel?.awaitMessageComponent({
+  //     filter: (button) => button.user.id === interaction.user.id && (button.customId === confirmTrue || button.customId === confirmFalse),
+  //     componentType: ComponentType.Button,
+  //     time: 60000
+  //   }).catch(() => ({ customId: "confirmTimeout" }));
 
-    if (confirm?.customId === confirmTrue) return true;
-    else if (confirm?.customId === confirmFalse) return false;
-    return null;
-  },
+  //   if (confirm?.customId === confirmTrue) return true;
+  //   else if (confirm?.customId === confirmFalse) return false;
+  //   return null;
+  // },
   // db: db,
+  /** @type {Record<string, Function>} */
+  perms: {},
   /**
    * Create an embed from a message
    * @param {Discord.Message} msg The message to turn into an embed
