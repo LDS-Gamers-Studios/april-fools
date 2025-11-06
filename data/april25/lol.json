@@ -1,0 +1,23 @@
+[
+  {"search": "\\bthe\\b", "replacement": ["TEH", "DUH", "DEH", "TUH"]},
+  {"search": "\\bgreat\\b", "replacement": "GRATE"},
+  {"search": "\\bare\\b", "replacement": ["R", "IZ"]},
+  {"search": "\\bbecause\\b", "replacement": ["CUZ", "FOR"]},
+  {"search": "\\bawesome\\b", "replacement": ["ASUM", "AWSUM"]},
+  {"search": "\\bcat\\b", "replacement": ["KITTEH", "KITI"]},
+  {"search": "\\byou'?re\\b", "replacement": ["YUR", "UR"]},
+  {"search": "\\byou\\b", "replacement": ["YUZ", "YUU", "U"]},
+  {"search": "\\bone\\b", "replacement": "1"},
+  {"search": "\\bhi\\b", "replacement": ["HOI", "HAI"]},
+  {"search": "\\bhello\\b", "replacement": ["HOI", "HAI"]},
+  {"search": "\\bhey\\b", "replacement": ["HOI", "HAI"]},
+  {"search": "!", "replacement": ["!!11!!!", "!!!!1!!", "!!1!"]},
+  {"search": "\\.", "replacement": ["!!11!!!", "!!!!1!!", "!!1!"]},
+  {"search": "\\?", "replacement": ["??\/\/???", "????/??", "??/?"]},
+  {"search": "er", "replacement": "R"},
+  {"search": "el", "replacement": "L"},
+  {"search": "tt", "replacement": "D"},
+  {"search": "s", "replacement": "Z"},
+  {"search": "ow", "replacement": "AO"},
+  {"search": "th", "replacement": "D"}
+]
