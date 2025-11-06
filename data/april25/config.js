@@ -1,7 +1,7 @@
 const config = require("../../config/config.json");
-const adMaterial = require("../../media/ads/ads.json");
+// const adMaterial = require("../../media/ads/ads.json");
 const NoRepeat = require("no-repeat");
-const moment = require("moment-timezone");
+// const moment = require("moment-timezone");
 const Discord = require("discord.js");
 
 const CONFIG = {
@@ -9,10 +9,12 @@ const CONFIG = {
   CONFIDENTIAL: false,
 
   // 10 - 6
-  WORKMODE: () => {
-    const time = moment().tz("America/Denver").hour();
-    return time > 9 && time < 18;
-  },
+  // WORKMODE: () => {
+  //   const time = moment().tz("America/Denver").hour();
+  //   return time > 9 && time < 18;
+  // },
+
+  WORKMODE: () => Math.random() >= 0.5,
 
   /** @type {"pig"|"pirate"|"uwu"|"lol"|"off"} */
   LANGUAGE: "pirate",
@@ -57,9 +59,9 @@ const poll = {
   ]
 };
 
-const ads = {
-  play: new NoRepeat(adMaterial.play),
-  work: new NoRepeat(adMaterial.work)
-};
+// const ads = {
+//   play: new NoRepeat(adMaterial.play),
+//   work: new NoRepeat(adMaterial.work)
+// };
 
-module.exports = { poll, CONFIG, roles, ads };
+module.exports = { poll, CONFIG, roles, /**ads*/ };
