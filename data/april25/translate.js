@@ -42,7 +42,7 @@ function pigLatin(str) {
    * 1) Foobar => Oobarfay // all consonant before first vowel get moved to the end
    * 2) Chow => Owchay // see 1
    * 3) Awesome => Awesomehay // if it starts with a vowel, add a random consonant before the ay
-   * 4) My => Myhay // if no vowels, keep it the same
+   * 4) My => Myay // if no vowels, keep it the same
    */
   
   const reset = () => {
@@ -193,6 +193,10 @@ function langPicker() {
   }
 }
 
+function getLanguage() {
+  return language;
+}
+
 /*****************
  * THE BIG THING *
  *****************/
@@ -253,4 +257,4 @@ function testing() {
 
 testing();
 
-module.exports = { translate, setLanguage, enabled };
+module.exports = { translate, setLanguage, getLanguage, enabled };

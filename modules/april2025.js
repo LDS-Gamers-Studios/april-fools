@@ -1,22 +1,16 @@
 // @ts-check
 const Augur = require("augurbot-ts");
 const Discord = require("discord.js");
-// const { joinVoiceChannel, createAudioResource, createAudioPlayer, AudioPlayerStatus, VoiceConnection } = require("@discordjs/voice");
 const { OpenAI } = require("openai");
-// const fs = require("fs");
 
 const aiConfig = require("../config/ai.json");
 const config = require("../config/config.json");
 const u = require("../utils/utils");
 
-const { poll, CONFIG, roles } = require("../data/april25/config");
+const { CONFIG, roles } = require("../data/april25/config");
 const translationService = require("../data/april25/translate");
 const { generateExcuse } = require("../data/april25/excuses");
 const { WORKMODE } = CONFIG;
-
-// /** @type {Discord.Collection<string, number>} */
-// const adstuff = new u.Collection();
-
 
 // /** @param {any} log  */
 // function debugLog(...log) {
@@ -39,22 +33,14 @@ const { WORKMODE } = CONFIG;
 //   }
 // }
 
+const heyIcarusTest = /^(hey|hi|yo|ahoy)\W? (icarus|bird ?bot)/i;
+
 // AI stuff
 const api = new OpenAI({ apiKey: aiConfig.auth });
 let globalCooldown = 0;
 
 /** @type {Map<string, number>} */
 const cooldowns = new Map();
-
-// let typingCooldown = false;
-
-// // Voice stuff
-// let canSwitchVCs = true;
-// /** @type {VoiceConnection} */
-// let connection;
-// /** @type {NodeJS.Timeout} */
-// let switchTimer;
-// let waitToTalk = true;
 
 /**
  * Generate a roast of a user or channel
@@ -84,12 +70,8 @@ function roast(channel, channelMode = false) {
  */
 async function cooldownCommand(msg, cb, coolDur = CONFIG.AI_COOLDOWN) {
   const cooldown = cooldowns.get(msg.author.id);
-  if (cooldown) {
-    msg.reply(`You're on cooldown! Try again in ${Math.floor((cooldown - Date.now()) / 1000)} seconds`)
-      .then(u.clean)
-      .catch(u.noop);
-    return;
-  }
+  if (cooldown) return msg.react("⏱️").catch(u.noop);
+
   if (globalCooldown > 0 || cooldowns.size > 5) {
     msg.reply(`My brain is being overloaded right now. Try again in ${globalCooldown === 0 ? Math.ceil((CONFIG.AI_COOLDOWN * 10) / 60_000) : "a few"} minutes.`)
       .then(u.clean)
@@ -191,7 +173,7 @@ const Module = new Augur.Module()
       ];
 
       if (WORKMODE()) rules.push("make it work related");
-      if (CONFIG.LANGUAGE === "pirate") rules.push("speak like a pirate. Don't make it about parots");
+      if (translationService.getLanguage() === "pirate") rules.push("speak like a pirate. Don't make it about parots");
       
       const params = genMessage(rules.join(". "));
       params.temperature = 1.2;
@@ -225,6 +207,31 @@ const Module = new Augur.Module()
   if (msg.content.toLowerCase() === "stop" && ref?.author.id === msg.client.user.id && ref.content.endsWith('Reply "STOP" to unsubscribe from bird facts')) {
     if (!msg.member.roles.cache.has(roles.birdFacts)) msg.member.roles.add(roles.birdFacts);
     msg.react("👍");
+    return true;
+  }
+
+  // hey icarus
+  const isConfirmedHeyIcarus = heyIcarusTest.test(msg.content)
+  if (isConfirmedHeyIcarus || msg.mentions.users.has(msg.client.user.id)) {
+    cooldownCommand(msg, async (m) => {
+      const rules = [
+        "You are a very snarky robot phoenix named Icarus",
+        "You DO NOT live in a fantasy environment",
+        "No swearing",
+        "You can lie and make up info",
+        "Keep responses to the length of a short text message"
+      ];
+
+      if (translationService.getLanguage() === "pirate") rules.push("Speak like a pirate");
+
+      const name = m.member?.displayName ?? m.author.displayName;
+      const prompt = `${name}: ${msg.content.substring(0, 150)}`;
+
+      const params = genMessage(rules.join(". "), prompt);
+      const completion = await api.chat.completions.create(params).catch(u.noop);
+
+      return msg.reply(completion?.choices[0]?.message.content || "idk man")
+    })
   }
 })
 
@@ -270,13 +277,13 @@ const Module = new Augur.Module()
     let name = ""
     switch (language) {
       case "pirate":
-        name = "Icarus - Pirate Bot o' Legend";
+        name = "Icarus - Pirate Bot o' Tall Tales";
         break;
       case "uwu":
         name = "Icawus - Biwd Bot of Wegend (◕‿◕)'";
         break;
       case "lol":
-        name = "ICARUZ - LOLCATZ BOT O' LEDGEND";
+        name = "ICARUZ - LOLCATTER O' LEDGENDARY";
         break;
       case "pig": 
         name = "Icarusway - Irdbay Otbay ofyay Egendlay";
