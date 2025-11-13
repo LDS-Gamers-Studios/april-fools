@@ -7,7 +7,7 @@ const it = "!"
 const neut = "?"
 
 const possessive = "$"
-const pronoun = "%"
+const pronoun = "*"
 const promptPerson = "#"
 
 const work = {
@@ -23,7 +23,7 @@ const work = {
     "I'm excited to more forward with this deal, but",
     "I appreciate your perspective. For now, we'll have to put this on hold since",
     "Unfortunately, my schedule is quite full at the moment.",
-    "I'll circle back on this when I have more capacity to engage; ",
+    "I'll circle back on this when I have more capacity to engage;",
     "I appreciate your message, but I'll need to step away from this discussion for now;",
     "It's been great talking to you, but",
     "I gotta bounce,",
@@ -136,7 +136,8 @@ const play = {
     `${fem}Martha Stewart`,
     `${fem}Lara Croft`,
     `${fem}GLaDOS`,
-    `${masc}Joe", "${masc}Tom", "${masc}Billy", "${masc}Fred", "${masc}Noah", "${masc}Minecraft Steve`,
+    `${masc}Joe`, `${masc}Tom`, `${masc}Billy`, `${masc}Fred`, `${masc}Noah`,
+    `${masc}Minecraft Steve`,
     `${masc}LDSG Ghost`,
     `${masc}Santana`,
     `${masc}Gandalf the Grey`,
@@ -146,6 +147,7 @@ const play = {
     `${masc}Kai`,
     `${masc}joyfulpenguin`,
     `${masc}Aramis`,
+    `${masc}BobbyTheCatfish`,
     `${masc}OhGo`,
     `${masc}Murple`,
     `${masc}Gaiwecoor`,
@@ -238,7 +240,7 @@ function generateExcuse(channelName, userName) {
 
   const intro = set.intros.getRandom();
   let person = set.people.getRandom();
-  let excuse = set.people.getRandom();
+  let excuse = set.excuses.getRandom();
 
   const personPronoun = person[0];
 
@@ -260,7 +262,7 @@ function generateExcuse(channelName, userName) {
   excuse = excuse
     .replaceAll(pronoun, them)
     .replaceAll(possessive, their)
-    .replaceAll(promptPerson, person)
+    .replace(promptPerson, person)
     .replace(/<@channel>/, channelName)
     .replace(/<@name>/, userName);
 
