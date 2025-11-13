@@ -4,7 +4,6 @@ const pirateData = require("./pirate.json");
 const uwuData = require("./uwu.json");
 
 const { CONFIG } = require("./config.js");
-const { EmbedBuilder } = require("discord.js");
 
 /*********************
  * TRANSLATION SETUP *
