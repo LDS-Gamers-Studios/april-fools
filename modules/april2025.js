@@ -58,7 +58,7 @@ function roast(channel, channelMode = false) {
   ];
   
   // if (WORKMODE()) rules.push("use corporate jargon.");
-  if (CONFIG.LANGUAGE === "pirate") rules.push("speak like a pirate");
+  if (translationService.getLanguage() === "pirate") rules.push("speak like a pirate");
 
   return rules.join(". ");
 }
