@@ -169,7 +169,7 @@ function rand(arr) {
  * UTILS *
  *********/
 
-let language = "pig";
+let language = "";
 
 /** @param {string} newLanguage */
 function setLanguage(newLanguage) {
@@ -201,7 +201,7 @@ function getLanguage() {
  *****************/
 
 /**
- * @param {{content?: string, embeds?: EmbedBuilder[]}|string} options
+ * @param {{content?: string, embeds?: import("discord.js").EmbedBuilder[]}|string} options
  * @param {string} channelId
  */
 function translate(options, channelId) {
@@ -243,17 +243,5 @@ function translate(options, channelId) {
   return options;
 }
 
-
-function testing() {
-  setLanguage("pig")
-  const text =[
-    translate("Visit my extra life: https://tenor.com/view/metrecalia-cramiro-starenn-redearth483-jessie-read-gif-15961095711548779426. it's very cool my!", ""),
-    translate("Visit my EXTRA LIFE: https://tenor.com/view/metrecalia-cramiro-starenn-redearth483-jessie-read-gif-15961095711548779426 they're very cool my", ""),
-    translate("(I spun out in my car in the middle of the desert cuz I fell asleep at the wheel, had to change a tire at 3 am, and limp back to the town I'm in now. The car has just been returned to full functioning order as of a few minutes ago, then I saw a train :D)", ""),
-  ]
-  console.log(text)
-}
-
-testing();
 
 module.exports = { translate, setLanguage, getLanguage, enabled };
