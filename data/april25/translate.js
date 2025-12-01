@@ -201,10 +201,19 @@ function getLanguage() {
  *****************/
 
 /**
- * @param {{content?: string, embeds?: import("discord.js").EmbedBuilder[]}|string} options
+ * @param {{content?: string, embeds?: import("discord.js").EmbedBuilder[], noTranslate?: boolean}|string} options
  * @param {string} channelId
  */
 function translate(options, channelId) {
+  let noTranslate = false;
+
+  if (typeof options !== "string") {
+    noTranslate = options.noTranslate ?? false;
+    options.noTranslate = undefined;
+  }
+
+  if (noTranslate) return options;
+
   // don't mess with mod stuff
   if ([
     "1207046196481237062", "1207046241540640798", "1207046448303050794", "1207046143385542737", // testing

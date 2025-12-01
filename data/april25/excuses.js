@@ -269,4 +269,8 @@ function generateExcuse(channelName, userName) {
   return `${intro} ${excuse}${workMode ? "." : "!"}`;
 }
 
+if (require.main === module) {
+  console.log(generateExcuse("<channel>", "<username>"));
+}
+
 module.exports = { generateExcuse };
