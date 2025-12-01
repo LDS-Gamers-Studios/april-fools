@@ -3,7 +3,7 @@ const Augur = require("augurbot-ts");
 const Discord = require("discord.js");
 const { OpenAI } = require("openai");
 
-const aiConfig = require("../config/ai.json");
+const aiConfig = require("../config/ai-.json");
 const config = require("../config/config.json");
 const u = require("../utils/utils");
 
@@ -32,6 +32,8 @@ const { WORKMODE } = CONFIG;
 //     await msg.guild.channels.cache.get(id)?.setName(starting ? pirate : name).catch(u.noop);
 //   }
 // }
+
+const Module = new Augur.Module();
 
 const heyIcarusTest = /^(hey|hi|yo|ahoy)\W? (icarus|bird ?bot)/i;
 
@@ -115,15 +117,22 @@ const genMessage = (msg, inputPart) => {
     ]
   };
 
-  if (inputPart) model.messages.push({ role: "user", content: inputPart });
+  if (inputPart) model.messages.push({
+    role: "user",
+    content: inputPart.replace(/<@(\d+)/g, (a, b) => {
+      return "@" + (Module.client.guilds.cache.get(u.sf.ldsg)?.members.cache.get(b)?.displayName || Module.client.users.cache.get(b)?.displayName || a)
+    }).replace(/<#(\d+)>/g, (a, b) => {
+      return "#" + Module.client.channels.cache.get(b)?.name || a;
+    })
+  });
   return model;
 };
 
-const Module = new Augur.Module()
+
 // AI Commands
-.addCommand({ name: "roastme",
+Module.addCommand({ name: "roastme",
   onlyGuild: true,
-  enabled: translationService.enabled(),
+  // enabled: translationService.enabled(),
   // enabled: CONFIG.ON,
   // onlyOwner: CONFIG.CONFIDENTIAL,
   // hidden: true,
@@ -158,7 +167,7 @@ const Module = new Augur.Module()
 // })
 .addCommand({ name: "birdfact",
   onlyGuild: true,
-  enabled: translationService.enabled(),
+  // enabled: translationService.enabled(),
   // enabled: CONFIG.ON,
   // onlyOwner: CONFIG.CONFIDENTIAL,
   hidden: true,
@@ -200,7 +209,7 @@ const Module = new Augur.Module()
 })
 // Ping role
 .addEvent("messageCreate", async (msg) => {
-  if (!msg.inGuild() || /** !CONFIG.ON || CONFIG.CONFIDENTIAL || */ !translationService.enabled() || !msg.member || msg.content.startsWith(config.prefix) || msg.author.bot) return;
+  if (!msg.inGuild() || /** !CONFIG.ON || CONFIG.CONFIDENTIAL || !translationService.enabled() ||*/ !msg.member || msg.content.startsWith(config.prefix) || msg.author.bot) return;
   
   // bird unsubscribe
   const ref = msg.channel.messages.cache.get(msg.reference?.messageId ?? "");
@@ -227,6 +236,8 @@ const Module = new Augur.Module()
       const name = m.member?.displayName ?? m.author.displayName;
       const prompt = `${name}: ${msg.content.substring(0, 150)}`;
 
+      await msg.channel.sendTyping();
+
       const params = genMessage(rules.join(". "), prompt);
       const completion = await api.chat.completions.create(params).catch(u.noop);
 
@@ -238,7 +249,7 @@ const Module = new Augur.Module()
 // other commands
 .addCommand({ name: "excuse",
   onlyGuild: true,
-  enabled: translationService.enabled(),
+  // enabled: translationService.enabled(),
   // enabled: CONFIG.ON,
   // onlyOwner: CONFIG.CONFIDENTIAL,
   hidden: true,
@@ -267,7 +278,7 @@ const Module = new Augur.Module()
 //     msg.reply("I saved the channel names in data/channels.csv. You'll have to translate them manually.")
 //   }
 // })
-.addCommand({ name: "language",
+.addCommand({ name: "setlanguage",
   permissions: msg => u.perms.isOwner(msg.member),
   onlyGuild: true,
   process: async (msg, suffix) => {
@@ -277,16 +288,16 @@ const Module = new Augur.Module()
     let name = ""
     switch (language) {
       case "pirate":
-        name = "Icarus - Pirate Bot o' Tall Tales";
+        name = "Icarus - Pirate Bot o' Tall Tale";
         break;
       case "uwu":
-        name = "Icawus - Biwd Bot of Wegend (◕‿◕)'";
+        name = "Icawus - Biwd Bot of Wegend(◕‿◕)";
         break;
       case "lol":
         name = "ICARUZ - LOLCATTER O' LEDGENDARY";
         break;
       case "pig": 
-        name = "Icarusway - Irdbay Otbay ofyay Egendlay";
+        name = "Icarusway - Irdbay Otbay";
         break;
       case "none":
         name = "Icarus - Bird Bot of Legend";
@@ -296,7 +307,7 @@ const Module = new Augur.Module()
     }
 
     if (!name) return msg.reply("Valid options are `pirate`, `uwu`, `lol`, `pig`, and none.");
-    translationService.setLanguage(name);
+    translationService.setLanguage(language);
     
     const birdrole = msg.guild.roles.cache.get(roles.birdFacts);
     if (!birdrole) return msg.reply("Couldn't find the bird facts role");
